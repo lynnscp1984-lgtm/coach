@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="女明星教練" />
+  <title>👑 珊綺專屬・女明星私房教練</title>
+  <style>
+    :root {
+      --bg: #F8FAFC;
+      --card: #FFFFFF;
+      --dark: #1E293B;
+      --teal: #0F766E;
+      --teal-light: #F0FDFA;
+      --green: #10B981;
+      --amber: #F59E0B;
+      --blue: #2563EB;
+      --red: #EF4444;
+      --text: #0F172A;
+      --muted: #64748B;
+      --border: #E2E8F0;
+    }
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      padding-bottom: 84px;
+      user-select: none;
+    }
+    /* 頂部看板 */
+    .header {
+      background: var(--dark);
+      color: #fff;
+      padding: max(16px, env(safe-area-inset-top)) 16px 16px;
+      border-bottom-left-radius: 22px;
+      border-bottom-right-radius: 22px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .header-title { font-size: 18px; font-weight: 800; margin: 0; }
+    .header-sub { font-size: 12px; color: #94A3B8; margin-top: 3px; }
+    .date-badge {
+      display: inline-block;
+      background: #334155;
+      color: #38BDF8;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 8px;
+      margin-top: 5px;
+    }
+    .points-badge {
+      background: var(--amber);
+      color: #fff;
+      font-weight: 800;
+      font-size: 13px;
+      padding: 6px 12px;
+      border-radius: 16px;
+      border: none;
+      cursor: pointer;
+    }
+    .quote-box {
+      background: #334155;
+      margin-top: 10px;
+      padding: 11px 12px;
+      border-radius: 12px;
+      cursor: pointer;
+    }
+    .quote-text { color: #FDE68A; font-size: 13px; font-weight: 600; line-height: 1.45; }
+    .quote-hint { color: #94A3B8; font-size: 10px; text-align: right; margin-top: 4px; }
+
+    /* 主容器與卡片 */
+    .container { padding: 14px; max-width: 600px; margin: 0 auto; }
+    .card {
+      background: var(--card);
+      border-radius: 16px;
+      padding: 15px;
+      margin-bottom: 14px;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+    }
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+    .card-title { font-size: 16px; font-weight: 800; margin: 0; color: var(--text); }
+    .helper { font-size: 12px; color: var(--muted); line-height: 1.5; margin: 4px 0 10px; }
+    .tag-badge {
+      background: #FEF3C7;
+      color: #B45309;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 8px;
+    }
+
+    /* 計時器 */
+    .timer-box {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #FFFBEB;
+      border: 1px solid #FDE68A;
+      padding: 12px;
+      border-radius: 12px;
+    }
+    .timer-digits { font-size: 28px; font-weight: 800; color: #B45309; font-variant-numeric: tabular-nums; }
+    .btn-group { display: flex; gap: 8px; }
+    .btn-primary {
+      background: var(--teal);
+      color: #fff;
+      border: none;
+      padding: 9px 14px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .btn-primary.active { background: #D97706; }
+    .btn-outline {
+      background: transparent;
+      color: #475569;
+      border: 1px solid #CBD5E1;
+      padding: 8px 12px;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-danger {
+      background: #FEF2F2;
+      color: var(--red);
+      border: 1px solid #FECACA;
+      padding: 6px 10px;
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* 進度條 */
+    .progress-bg {
+      height: 10px;
+      background: #E2E8F0;
+      border-radius: 6px;
+      overflow: hidden;
+      margin: 8px 0;
+    }
+    .progress-fill { height: 100%; border-radius: 6px; transition: width 0.25s ease; }
+
+    /* 喝水按鈕 */
+    .water-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 8px; }
+    .water-btn {
+      background: #EFF6FF;
+      color: #1D4ED8;
+      border: none;
+      padding: 9px 4px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* 星期選單 */
+    .day-scroll {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 6px;
+      margin: 8px 0;
+    }
+    .day-chip {
+      background: #F1F5F9;
+      color: #475569;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 14px;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+    .day-chip.active { background: var(--teal); color: #fff; }
+    .workout-box {
+      background: var(--teal-light);
+      border-left: 4px solid #0D9488;
+      padding: 12px;
+      border-radius: 10px;
+    }
+    .workout-title { font-size: 14px; font-weight: 800; color: #115E59; margin-bottom: 4px; }
+    .workout-detail { font-size: 12px; color: #134E4A; line-height: 1.55; white-space: pre-line; }
+
+    /* 檢核表 */
+    .check-row {
+      display: flex;
+      align-items: center;
+      padding: 10px 8px;
+      border-radius: 10px;
+      background: #F8FAFC;
+      margin-bottom: 6px;
+      cursor: pointer;
+    }
+    .check-row.done { background: #ECFDF5; }
+    .checkbox {
+      width: 22px;
+      height: 22px;
+      border-radius: 6px;
+      border: 2px solid #94A3B8;
+      margin-right: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: bold;
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .check-row.done .checkbox { background: var(--green); border-color: var(--green); }
+    .check-text { flex: 1; font-size: 13px; color: var(--dark); line-height: 1.35; }
+    .check-row.done .check-text { text-decoration: line-through; color: var(--muted); }
+    .check-pts { font-size: 11px; font-weight: 800; color: #D97706; margin-left: 6px; }
+
+    /* 食物列表 */
+    .preset-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid #F1F5F9;
+      cursor: pointer;
+    }
+    .preset-name { font-size: 13px; font-weight: 700; color: var(--dark); }
+    .preset-tag { font-size: 11px; color: var(--muted); margin-top: 2px; }
+    .add-cal-badge {
+      background: #ECFDF5;
+      color: #059669;
+      font-weight: 800;
+      font-size: 12px;
+      padding: 5px 10px;
+      border-radius: 8px;
+      flex-shrink: 0;
+    }
+    .log-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid #F1F5F9;
+      font-size: 13px;
+    }
+    .del-btn {
+      background: none;
+      border: none;
+      color: var(--red);
+      font-weight: bold;
+      font-size: 15px;
+      cursor: pointer;
+      padding: 2px 8px;
+    }
+
+    /* 表單與輸入框 */
+    .input-row { display: flex; gap: 6px; margin-top: 10px; }
+    .input {
+      background: #F1F5F9;
+      border: 1px solid transparent;
+      border-radius: 8px;
+      padding: 9px 10px;
+      font-size: 13px;
+      color: var(--text);
+      width: 100%;
+    }
+    .input:focus { outline: none; border-color: var(--teal); background: #fff; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .label { font-size: 12px; font-weight: 700; color: #334155; margin-bottom: 4px; display: block; }
+    .status-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 4px; }
+    .status-chip {
+      background: #F1F5F9;
+      color: #475569;
+      border: none;
+      padding: 9px 4px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .status-chip.active { background: var(--teal); color: #fff; }
+
+    /* 照片上傳區 */
+    .photo-upload-zone {
+      border: 2px dashed #A78BFA;
+      background: #F5F3FF;
+      border-radius: 12px;
+      padding: 14px;
+      text-align: center;
+      cursor: pointer;
+      margin: 10px 0;
+      transition: background 0.2s;
+    }
+    .photo-upload-zone:active { background: #EDE9FE; }
+    .photo-preview {
+      max-width: 100%;
+      max-height: 180px;
+      border-radius: 10px;
+      margin-top: 8px;
+      display: none;
+      object-fit: cover;
+    }
+
+    /* 底部導覽列 */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #FFFFFF;
+      border-top: 1px solid var(--border);
+      display: flex;
+      padding-top: 8px;
+      padding-bottom: max(8px, env(safe-area-inset-bottom));
+      z-index: 100;
+    }
+    .nav-item {
+      flex: 1;
+      background: none;
+      border: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .nav-item.active { color: var(--teal); font-weight: 800; }
+    .nav-icon { font-size: 19px; margin-bottom: 2px; }
+
+    /* 彈出視窗 */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 200;
+    }
+    .modal-overlay.show { display: flex; }
+    .modal-box {
+      background: #fff;
+      border-radius: 16px;
+      padding: 18px;
+      width: 100%;
+      max-width: 420px;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+
+  <!-- 頂部專屬教練看板 -->
+  <div class="header">
+    <div class="header-top">
+      <div>
+        <h1 class="header-title">👑 珊綺專屬・女明星私房教練</h1>
+        <div class="header-sub">護髖減脂 × 消滅氣球肚 × 喚醒 1096 代謝</div>
+        <div class="date-badge" id="todayDateBadge">📅 載入日期中...</div>
+      </div>
+      <button class="points-badge" onclick="switchTab('reward')" id="topPointsBadge">💎 0 分</button>
+    </div>
+    <div class="quote-box" onclick="nextQuote()">
+      <div class="quote-text" id="quoteText"></div>
+      <div class="quote-hint">（點擊切換教練叮嚀・跨日自動刷新打卡）</div>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- ================= TAB 1: 今日教練 ================= -->
+    <div id="tab-today">
+      <!-- 20分鐘慢食計時器 -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">🍽️ 20分鐘慢食計時器（專治脹氣）</h2>
+          <span class="tag-badge">每口咬 20 下</span>
+        </div>
+        <p class="helper">狼吞虎嚥會吞下大量空氣！開動時按下開始，放下筷子慢慢咬滿 20 分鐘，計時結束自動打勾慢食並 +15 分！</p>
+        <div class="timer-box">
+          <div class="timer-digits" id="chewDisplay">20:00</div>
+          <div class="btn-group">
+            <button class="btn-primary" id="chewBtn" onclick="toggleChewTimer()">開動！開始慢食</button>
+            <button class="btn-outline" onclick="resetChewTimer()">重置</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 飲水計算與打卡 -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">💧 每日排毒飲水目標</h2>
+          <span style="font-size:15px;font-weight:800;color:var(--blue);" id="waterHeader">0 / 2500 ml</span>
+        </div>
+        <p class="helper" id="waterHelper"></p>
+        <div class="progress-bg">
+          <div class="progress-fill" id="waterBar" style="width:0%;background:var(--blue);"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+          <span style="font-size:11px;font-weight:700;color:#059669;" id="waterBonusHint">🎁 喝水達標自動打勾檢核並賺 +15 購物金！</span>
+        </div>
+        <div class="water-grid">
+          <button class="water-btn" onclick="addWater(200)">+200ml 溫水</button>
+          <button class="water-btn" onclick="addWater(350)">+350ml 隨行杯</button>
+          <button class="water-btn" onclick="addWater(500)">+500ml 運動水</button>
+          <button class="water-btn" style="background:#F3F4F6;color:#6B7280;" onclick="resetWater()">歸零</button>
+        </div>
+      </div>
+
+      <!-- 護髖運動課表 -->
+      <div class="card">
+        <h2 class="card-title">🧘‍♀️ 護髖關節・私人教練運動課表</h2>
+        <div class="day-scroll" id="daySelector"></div>
+        <div class="workout-box">
+          <div class="workout-title" id="workoutTitle"></div>
+          <div class="workout-detail" id="workoutDetail"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px;padding-top:10px;border-top:1px solid #F1F5F9;">
+          <span style="font-size:12px;font-weight:700;color:#334155;" id="sitDisplay">🪑 辦公室久坐 50 分鐘扭腰計時：50:00</span>
+          <button class="btn-outline" style="padding:5px 10px;" id="sitBtn" onclick="toggleSitTimer()">啟動提醒</button>
+        </div>
+      </div>
+
+      <!-- 每日 9 大檢核（含飲水達標） -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">✅ 每日 9 大黃金檢核（打勾賺購物金）</h2>
+          <button class="btn-outline" style="padding:4px 8px;font-size:11px;" onclick="resetDailyChecklist()">重置今日勾選</button>
+        </div>
+        <div id="checklistContainer" style="margin-top:8px;"></div>
+      </div>
+    </div>
+
+    <!-- ================= TAB 2: 飲食精算 ================= -->
+    <div id="tab-food" class="hidden">
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">🔥 今日熱量與營養素精算</h2>
+          <span style="font-size:15px;font-weight:800;color:#059669;" id="calHeader">0 / 1200 kcal</span>
+        </div>
+        <p class="helper">不盲目挨餓！守住 1150~1250 kcal 黃金赤字，吃夠蛋白質與苦茶油，才能把 1096 的基礎代謝救回來。</p>
+        <div class="progress-bg">
+          <div class="progress-fill" id="calBar" style="width:0%;background:var(--green);"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:12px;font-weight:700;color:#334155;">
+          <span id="proHeader">💪 蛋白質累計：0g / 目標 80g</span>
+          <span id="apiStatusLabel">⚪ 離線估算模式</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">⚡ 拍照 AI 算熱量 ＆ 常備菜色庫</h2>
+          <div style="display:flex;gap:6px;">
+            <button class="btn-primary" style="background:#475569;padding:6px 10px;font-size:11px;" onclick="openModal('apiModal')">🔑 設定 API</button>
+            <button class="btn-primary" style="background:#7C3AED;padding:6px 12px;font-size:12px;" onclick="openModal('aiModal')">📸 拍照/傳圖 AI 算熱量</button>
+          </div>
+        </div>
+        <p class="helper">點右上角紫色「📸 拍照/傳圖 AI 算熱量」可直接拍下餐點或選相簿照片讓 Gemini Vision 辨識；常吃餐點也可點下方按鈕 1 秒入帳：</p>
+        <div id="presetFoodsContainer"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">📝 今日已記錄餐點</h2>
+          <button class="btn-outline" style="padding:4px 8px;font-size:11px;" onclick="clearFoodLogs()">清空今日餐點</button>
+        </div>
+        <div id="foodLogsContainer"></div>
+        <div class="input-row">
+          <input class="input" style="flex:2;" id="customFoodName" placeholder="自訂食物名稱" />
+          <input class="input" style="flex:1;" id="customFoodCal" type="number" placeholder="大卡" />
+          <input class="input" style="flex:1;" id="customFoodPro" type="number" placeholder="蛋白(g)" />
+          <button class="btn-primary" style="background:var(--dark);white-space:nowrap;" onclick="addCustomFood()">新增</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= TAB 3: 體重與腸道 ================= -->
+    <div id="tab-body" class="hidden">
+      <div class="card">
+        <h2 class="card-title">⚖️ 體重計數據 × 氣球肚排便交叉紀錄</h2>
+        <p class="helper">看完小米體重計後填入下方，系統會自動抓取今天日期，並結合排便與脹氣狀況判斷是否為宿便水腫（若順暢排空且腹部平坦，自動獎勵 +20 購物金！）：</p>
+        <div class="grid-3">
+          <div>
+            <label class="label">今日體重(kg)</label>
+            <input class="input" id="weightInput" type="number" step="0.1" placeholder="例如 55.0" />
+          </div>
+          <div>
+            <label class="label">基礎代謝 BMR</label>
+            <input class="input" id="bmrInput" type="number" placeholder="例如 1096" />
+          </div>
+          <div>
+            <label class="label">體脂率 (%)</label>
+            <input class="input" id="fatInput" type="number" step="0.1" placeholder="例如 27.5" />
+          </div>
+        </div>
+
+        <label class="label" style="margin-top:12px;">🚽 今日排便狀況：</label>
+        <div class="status-row" id="poopRow">
+          <button class="status-chip" onclick="setPoop('smooth')">✨ 順暢排空</button>
+          <button class="status-chip" onclick="setPoop('hard')">🐑 乾硬羊便便</button>
+          <button class="status-chip active" onclick="setPoop('none')">🚫 完全沒動靜</button>
+        </div>
+
+        <label class="label" style="margin-top:10px;">🎈 今日腹部脹氣程度：</label>
+        <div class="status-row" id="bloatRow">
+          <button class="status-chip" onclick="setBloat('flat')">🌿 平坦輕鬆</button>
+          <button class="status-chip" onclick="setBloat('mild')">💨 稍微悶脹</button>
+          <button class="status-chip active" onclick="setBloat('balloon')">🎈 嚴重氣球肚</button>
+        </div>
+
+        <button class="btn-primary" style="width:100%;margin-top:14px;padding:11px;" onclick="saveBodyRecord()">💾 儲存今日體重與腸道紀錄（自動抓今日日期）</button>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">📈 體重波動真相診斷紀錄</h2>
+          <button class="btn-outline" style="padding:4px 8px;font-size:11px;" onclick="clearBodyHistory()">清空紀錄</button>
+        </div>
+        <div id="bodyHistoryContainer" style="margin-top:8px;"></div>
+      </div>
+    </div>
+
+    <!-- ================= TAB 4: 目標解鎖 ================= -->
+    <div id="tab-reward" class="hidden">
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">🎁 女明星寵愛自己・達標購物解鎖庫</h2>
+          <button class="btn-outline" style="padding:4px 8px;font-size:11px;" onclick="resetPointsZero()">積分歸零</button>
+        </div>
+        <p class="helper">每天完成打卡、喝水達標 (+15分)、順暢排便消脹氣 (+20分) 都能賺取購物金！在下方寫下妳達標想買的禮物吧：</p>
+        <div style="background:#FFFBEB;border:1px solid #FDE68A;padding:12px;border-radius:12px;display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+          <span style="font-size:13px;font-weight:800;color:#92400E;">目前累積獎勵購物金</span>
+          <span style="font-size:20px;font-weight:800;color:#D97706;" id="rewardPointsValue">💎 0 分</span>
+        </div>
+        <div id="rewardsContainer"></div>
+
+        <label class="label" style="margin-top:14px;">➕ 新增達標想買的禮物：</label>
+        <div class="input-row">
+          <input class="input" style="flex:2;" id="newRewardTitle" placeholder="輸入妳想買的東西..." />
+          <input class="input" style="flex:1;" id="newRewardTarget" type="number" placeholder="目標積分" />
+          <button class="btn-primary" style="background:var(--dark);white-space:nowrap;" onclick="addReward()">新增目標</button>
+        </div>
+      </div>
+
+      <!-- 系統管理：全部重新開始 -->
+      <div class="card" style="border: 1px dashed #FECACA;">
+        <div class="card-header">
+          <h2 class="card-title" style="font-size:14px;color:#991B1B;">⚙️ 系統資料管理</h2>
+          <button class="btn-danger" onclick="resetAllClean()">🔄 全部清空從零開始</button>
+        </div>
+        <p class="helper" style="margin-bottom:0;">點擊右側按鈕，可隨時將所有目標、餐點、體重歷史與積分全部歸零（會保留已輸入的 Gemini API Key）。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 設定 API Key 彈出視窗 -->
+  <div class="modal-overlay" id="apiModal">
+    <div class="modal-box">
+      <h3 class="card-title">🔑 輸入妳的專屬 Gemini API Key</h3>
+      <p class="helper">請貼上在 Google AI Studio 申請的 API Key（AIzaSy... 開頭）。金鑰只會保存在妳這支 iPhone 本機裡，絕對不會外洩！</p>
+      <input class="input" id="apiKeyInput" placeholder="貼上 AIzaSy... 開頭的 API Key" style="margin:10px 0;" />
+      <div style="display:flex;justify-content:flex-end;gap:8px;">
+        <button class="btn-outline" onclick="closeModal('apiModal')">取消</button>
+        <button class="btn-primary" onclick="saveApiKey()">儲存並啟用</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI 拍照/傳圖餐盤估算彈出視窗 -->
+  <div class="modal-overlay" id="aiModal">
+    <div class="modal-box">
+      <h3 class="card-title">📸 拍照 / 傳圖讓 AI 教練算卡路里</h3>
+      <p class="helper">點擊下方紫色虛線框，可直接開啟手機相機拍下眼前的便當、合菜，或從相簿選擇照片，AI 會自動辨識食物並估算熱量與蛋白質：</p>
+
+      <input type="file" id="foodPhotoInput" accept="image/*" style="display:none;" onchange="handlePhotoSelected(event)" />
+      <div class="photo-upload-zone" onclick="document.getElementById('foodPhotoInput').click()">
+        <div id="photoUploadPrompt" style="font-size:13px;font-weight:800;color:#6D28D9;">📷 點此拍照 或 從手機相簿選取餐點照片</div>
+        <div style="font-size:11px;color:#7C3AED;margin-top:3px;">（系統會自動壓縮圖片，秒速傳給 Gemini Vision 分析）</div>
+        <img id="foodPhotoPreview" class="photo-preview" alt="餐點預覽" />
+      </div>
+
+      <label class="label" style="margin-top:8px;">✍️ 補充說明吃了多少（選填，能讓 AI 算得更準！）：</label>
+      <textarea class="input" id="aiInputText" rows="2" placeholder="例如：這是六人份我只夾一點、白飯只吃半碗、湯沒喝..." style="margin:6px 0 10px;"></textarea>
+      <div id="aiLoading" class="hidden" style="text-align:center;color:var(--teal);font-size:12px;margin:8px 0;font-weight:700;">⏳ 正在傳送照片給 Gemini Vision 視覺分析熱量與產氣指數...</div>
+      <div style="display:flex;justify-content:flex-end;gap:8px;">
+        <button class="btn-outline" onclick="closeAiModal()">取消</button>
+        <button class="btn-primary" style="background:#7C3AED;" onclick="runAiFoodAnalysis()">✨ 立即 AI 視覺精算入帳</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 底部導覽列 -->
+  <nav class="bottom-nav">
+    <button class="nav-item active" id="nav-today" onclick="switchTab('today')">
+      <span class="nav-icon">🔥</span><span>今日教練</span>
+    </button>
+    <button class="nav-item" id="nav-food" onclick="switchTab('food')">
+      <span class="nav-icon">🥗</span><span>飲食精算</span>
+    </button>
+    <button class="nav-item" id="nav-body" onclick="switchTab('body')">
+      <span class="nav-icon">⚖️</span><span>體重與腸道</span>
+    </button>
+    <button class="nav-item" id="nav-reward" onclick="switchTab('reward')">
+      <span class="nav-icon">🎁</span><span>目標解鎖</span>
+    </button>
+  </nav>
+
+  <script>
+    const COACH_QUOTES = [
+      '「妳那不是胖，是腸道罷工加熬夜水腫！今天給我乖乖喝水、每口咬20下！」',
+      '「基礎代謝 1096 還敢餓肚子？把蛋白質跟苦茶油吃夠，代謝才會醒過來！」',
+      '「久坐壓迫髖關節又脹氣，現在立刻離開椅子扭腰深呼吸 5 次！」',
+      '「全家人吃六人份大餐，妳只吃精華加好油，這自律程度根本女明星等級！」',
+      '「11點前躺平睡覺，瘦體素才會出來幫妳消水腫，今晚不准再滑手機到12點！」',
+      '「吃太快等於吞空氣！按下慢食計時器，優雅吃滿 20 分鐘，氣球肚自動消風！」'
+    ];
+
+    const WORKOUT_PLANS = {
+      0: { day: '週日', title: '室內單車 200卡 ＋ 護髖核心', detail: '座墊調高（最高點大腿夾角 >90度）｜轉速 RPM 80-90｜心率 130-140 bpm 騎 35 分鐘。\n核心：死蟲式(腳不放太低) 3組 ＋ 橋式 15下×3組。', extraWater: 300 },
+      1: { day: '週一', title: '室內單車 200卡 ＋ 骨盆穩定', detail: '中低阻力高轉速 RPM 80-90 騎 35 分鐘。\n核心與舒緩：側臥貝殼式 12下×3組 ＋ 躺姿腹式呼吸 20 次排氣。', extraWater: 300 },
+      2: { day: '週二', title: '🌙 夜跑 5 公里（護髖高步頻）', detail: '不求快！配速控制在 7分半~8分速，重點是「小步快頻（步頻 170-180）」，減輕髖臼撞擊。\n跑前跑後做弓步溫和伸展，若鼠蹊部刺痛立刻改快走。', extraWater: 500 },
+      3: { day: '週三', title: '室內單車 200卡 ＋ 護髖核心', detail: '座墊調高避免擠壓鼠蹊部｜RPM 80-90 騎 35 分鐘。\n核心：鳥狗式 10下×3組 ＋ 橋式 15下×3組（嚴禁仰臥起坐與直腿抬腿！）。', extraWater: 300 },
+      4: { day: '週四', title: '室內單車 200卡 ＋ 消氣伸展', detail: '輕鬆騎 RPM 80-85 消耗 200 卡。\n睡前做「仰躺抱膝微外旋」停留 30秒×3次，打開髖關節空間並幫助排氣。', extraWater: 300 },
+      5: { day: '週五', title: '🌅 晨跑 4 公里（喚醒代謝）', detail: '跑前喝 200cc 溫水｜維持小步快頻（步頻 175 左右）、心率 130 bpm 輕鬆跑。\n10:00 補充無糖溫豆漿 350ml ＋ 一小塊蒸地瓜。', extraWater: 400 },
+      6: { day: '週六', title: '室內單車 200卡 ＋ 臀中肌強化', detail: 'RPM 80-90 騎 35 分鐘。\n核心：死蟲式 3組 ＋ 側臥貝殼式 3組，強化臀肌保護髖關節。', extraWater: 300 }
+    };
+
+    const PRESET_FOODS = [
+      { id: 'f1', name: '🌅 10:00 無糖溫豆漿 350ml', cal: 130, protein: 12, tag: '14/10開胃・零產氣' },
+      { id: 'f2', name: '🧀 天然陳年起司 2片/塊', cal: 110, protein: 7, tag: '高效補鈣・無乳糖不脹氣' },
+      { id: 'f3', name: '🏫 學校午餐：半碗飯+去皮滷肉/蒸魚+2份菜', cal: 460, protein: 28, tag: '過水去醬汁・高纖排便' },
+      { id: 'f4', name: '🥄 苦茶油 / 橄欖油 1茶匙(5ml)', cal: 45, protein: 0, tag: '必備潤腸王牌・解便秘' },
+      { id: 'f5', name: '🐟 家中合菜分食：烤鯖魚/白身魚+青菜菇類', cal: 320, protein: 26, tag: 'Omega3抗發炎・無澱粉' },
+      { id: 'f6', name: '🍲 黃金泡菜味噌鍋(多菜豆腐肉・烏龍麵2口・少湯)', cal: 380, protein: 24, tag: '聰明打撈法・防隔日水腫' },
+      { id: 'f7', name: '🥣 夜間排空：白蘿蔔鮮菇嫩豆腐湯(半盒豆腐)', cal: 210, protein: 14, tag: '暖腹消水腫・零負擔' },
+      { id: 'f8', name: '🍠 運動日加餐：蒸地瓜/蒸南瓜 80g', cal: 65, protein: 1, tag: '優質原型碳水・護代謝' },
+      { id: 'f9', name: '🥜 下午防餓：原味堅果 6 顆', cal: 45, protein: 2, tag: '穩定血糖・好油脂' }
+    ];
+
+    function getTodayDateString() {
+      const d = new Date();
+      const y = d.getFullYear();
+      const m = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      return `${y}-${m}-${day}`;
+    }
+
+    function getFormattedBannerDate() {
+      const d = new Date();
+      const weekNames = ['週日', '週一', '週二', '週三', '週四', '週五', '週六'];
+      return `📅 今日日期：${d.getFullYear()}/${d.getMonth() + 1}/${d.getDate()}（${weekNames[d.getDay()]}）`;
+    }
+
+    function getCleanDefaultState(savedApiKey = '') {
+      return {
+        lastActiveDate: getTodayDateString(),
+        points: 0,
+        userWeight: 55.0,
+        waterMl: 0,
+        apiKey: savedApiKey,
+        checklist: [
+          { id: 'c1', text: '10:00 溫豆漿開機（溫和 14/10 輕斷食，不傷代謝）', done: false, pts: 10 },
+          { id: 'c2', text: '吃飯要慢！每口咬 20 下、用餐滿 20 分鐘（防吞氣脹氣）', done: false, pts: 15 },
+          { id: 'c3', text: '戒除鮮奶（改吃天然陳年起司補鈣，切斷乳糖產氣）', done: false, pts: 10 },
+          { id: 'c_water', text: '💧 今日排毒飲水量達標（上方點選喝水達標也會自動打勾！）', done: false, pts: 15 },
+          { id: 'c4', text: '攝取 1~2 茶匙好油（苦茶油/橄欖油，潤滑腸道解便秘）', done: false, pts: 10 },
+          { id: 'c5', text: '完成今日護髖運動與安全核心（不強求快配速）', done: false, pts: 15 },
+          { id: 'c6', text: '辦公久坐每 50 分鐘起身扭腰＋腹式呼吸 5 次', done: false, pts: 10 },
+          { id: 'c7', text: '22:00 洗澡 / 22:30 放下手機（數位宵禁降皮質醇）', done: false, pts: 15 },
+          { id: 'c8', text: '23:00 準時躺平睡覺（拯救 1096 基礎代謝率！）', done: false, pts: 20 }
+        ],
+        foodLogs: [],
+        bodyHistory: [],
+        rewards: []
+      };
+    }
+
+    const oldV1 = JSON.parse(localStorage.getItem('shanqi_coach_v1') || 'null');
+    const inheritedKey = (oldV1 && oldV1.apiKey) ? oldV1.apiKey : '';
+
+    let state = JSON.parse(localStorage.getItem('shanqi_coach_clean_v2')) || getCleanDefaultState(inheritedKey);
+
+    const currentTodayStr = getTodayDateString();
+    if (state.lastActiveDate !== currentTodayStr) {
+      state.lastActiveDate = currentTodayStr;
+      state.waterMl = 0;
+      state.foodLogs = [];
+      state.checklist.forEach(c => c.done = false);
+      localStorage.setItem('shanqi_coach_clean_v2', JSON.stringify(state));
+    }
+
+    let quoteIdx = 0;
+    let selectedDay = new Date().getDay();
+    let poopStatus = 'none';
+    let bloatStatus = 'balloon';
+
+    let chewSeconds = 20 * 60;
+    let chewInterval = null;
+    let sitSeconds = 50 * 60;
+    let sitInterval = null;
+
+    // 儲存選取並壓縮後的照片 Base64
+    let currentPhotoBase64 = null;
+
+    function saveState() {
+      state.lastActiveDate = getTodayDateString();
+      localStorage.setItem('shanqi_coach_clean_v2', JSON.stringify(state));
+      renderAll();
+    }
+
+    function nextQuote() {
+      quoteIdx = (quoteIdx + 1) % COACH_QUOTES.length;
+      document.getElementById('quoteText').innerText = COACH_QUOTES[quoteIdx];
+    }
+
+    function switchTab(tab) {
+      ['today', 'food', 'body', 'reward'].forEach(t => {
+        document.getElementById('tab-' + t).classList.toggle('hidden', t !== tab);
+        document.getElementById('nav-' + t).classList.toggle('active', t === tab);
+      });
+    }
+
+    function formatTime(sec) {
+      const m = Math.floor(sec / 60);
+      const s = sec % 60;
+      return (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
+    }
+
+    function toggleChewTimer() {
+      const btn = document.getElementById('chewBtn');
+      if (chewInterval) {
+        clearInterval(chewInterval);
+        chewInterval = null;
+        btn.innerText = '繼續慢食';
+        btn.classList.remove('active');
+      } else {
+        btn.innerText = '暫停計時';
+        btn.classList.add('active');
+        chewInterval = setInterval(() => {
+          if (chewSeconds > 0) {
+            chewSeconds--;
+            document.getElementById('chewDisplay').innerText = formatTime(chewSeconds);
+          } else {
+            clearInterval(chewInterval);
+            chewInterval = null;
+            btn.innerText = '開動！開始慢食';
+            btn.classList.remove('active');
+            alert('🎉 慢食 20 分鐘達標！細嚼慢嚥能減少 70% 吞氣型脹氣，自動勾選慢食檢核並 +15 積分！');
+            const item = state.checklist.find(c => c.id === 'c2');
+            if (item && !item.done) {
+              item.done = true;
+              state.points += item.pts;
+              saveState();
+            }
+          }
+        }, 1000);
+      }
+    }
+
+    function resetChewTimer() {
+      if (chewInterval) clearInterval(chewInterval);
+      chewInterval = null;
+      chewSeconds = 20 * 60;
+      document.getElementById('chewDisplay').innerText = '20:00';
+      const btn = document.getElementById('chewBtn');
+      btn.innerText = '開動！開始慢食';
+      btn.classList.remove('active');
+    }
+
+    function toggleSitTimer() {
+      const btn = document.getElementById('sitBtn');
+      if (sitInterval) {
+        clearInterval(sitInterval);
+        sitInterval = null;
+        btn.innerText = '啟動提醒';
+      } else {
+        btn.innerText = '暫停';
+        sitInterval = setInterval(() => {
+          if (sitSeconds > 0) {
+            sitSeconds--;
+            document.getElementById('sitDisplay').innerText = '🪑 辦公室久坐 50 分鐘扭腰計時：' + formatTime(sitSeconds);
+          } else {
+            clearInterval(sitInterval);
+            sitInterval = null;
+            sitSeconds = 50 * 60;
+            btn.innerText = '啟動提醒';
+            alert('⏰ 50分鐘到了！珊綺老師請起立！扭腰 10 下＋深呼吸 5 次，拯救髖關節與腸道！');
+          }
+        }, 1000);
+      }
+    }
+
+    function addWater(ml) {
+      const baseGoal = Math.round(state.userWeight * 40);
+      const totalGoal = baseGoal + WORKOUT_PLANS[selectedDay].extraWater;
+      const next = state.waterMl + ml;
+      state.waterMl = next;
+
+      const waterCheck = state.checklist.find(c => c.id === 'c_water');
+      if (next >= totalGoal && waterCheck && !waterCheck.done) {
+        waterCheck.done = true;
+        state.points += waterCheck.pts;
+        alert(`💧 今日飲水達標 (${next} ml)！已自動幫妳勾選「飲水達標檢核」並賺取 +${waterCheck.pts} 分購物金！`);
+      }
+      saveState();
+    }
+
+    function resetWater() {
+      const waterCheck = state.checklist.find(c => c.id === 'c_water');
+      if (waterCheck && waterCheck.done) {
+        waterCheck.done = false;
+        state.points = Math.max(0, state.points - waterCheck.pts);
+      }
+      state.waterMl = 0;
+      saveState();
+    }
+
+    function selectDay(d) {
+      selectedDay = d;
+      renderAll();
+    }
+
+    function toggleCheck(id) {
+      const item = state.checklist.find(c => c.id === id);
+      if (item) {
+        item.done = !item.done;
+        state.points = item.done ? state.points + item.pts : Math.max(0, state.points - item.pts);
+        if (id === 'c_water' && item.done) {
+          const baseGoal = Math.round(state.userWeight * 40);
+          const totalGoal = baseGoal + WORKOUT_PLANS[selectedDay].extraWater;
+          if (state.waterMl < totalGoal) state.waterMl = totalGoal;
+        }
+        saveState();
+      }
+    }
+
+    function resetDailyChecklist() {
+      if (confirm('確定要重置今日的打卡勾選、飲水量與今日餐點嗎？（已累積的購物金積分、目標與體重紀錄會完整保留！）')) {
+        state.checklist.forEach(c => c.done = false);
+        state.waterMl = 0;
+        state.foodLogs = [];
+        saveState();
+      }
+    }
+
+    function addPresetFood(idx) {
+      const f = PRESET_FOODS[idx];
+      state.foodLogs.push({ id: Date.now().toString(), name: f.name, cal: f.cal, protein: f.protein });
+      saveState();
+    }
+
+    function addCustomFood() {
+      const name = document.getElementById('customFoodName').value.trim();
+      const cal = parseInt(document.getElementById('customFoodCal').value, 10) || 0;
+      const pro = parseInt(document.getElementById('customFoodPro').value, 10) || 0;
+      if (!name || !cal) return;
+      state.foodLogs.push({ id: Date.now().toString(), name, cal, protein: pro });
+      document.getElementById('customFoodName').value = '';
+      document.getElementById('customFoodCal').value = '';
+      document.getElementById('customFoodPro').value = '';
+      saveState();
+    }
+
+    function removeFood(id) {
+      state.foodLogs = state.foodLogs.filter(f => f.id !== id);
+      saveState();
+    }
+
+    function clearFoodLogs() {
+      if (confirm('確定清空今日已記錄餐點？')) {
+        state.foodLogs = [];
+        saveState();
+      }
+    }
+
+    function openModal(id) {
+      if (id === 'apiModal') {
+        document.getElementById('apiKeyInput').value = state.apiKey || '';
+      }
+      document.getElementById(id).classList.add('show');
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('show');
+    }
+
+    function closeAiModal() {
+      currentPhotoBase64 = null;
+      document.getElementById('foodPhotoInput').value = '';
+      const preview = document.getElementById('foodPhotoPreview');
+      preview.style.display = 'none';
+      preview.src = '';
+      document.getElementById('photoUploadPrompt').innerText = '📷 點此拍照 或 從手機相簿選取餐點照片';
+      document.getElementById('aiInputText').value = '';
+      document.getElementById('aiLoading').classList.add('hidden');
+      closeModal('aiModal');
+    }
+
+    // 處理手機拍照或選取相簿圖片，並用 Canvas 自動壓縮至 800px 內加快上傳速度
+    function handlePhotoSelected(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const img = new Image();
+        img.onload = function() {
+          const canvas = document.createElement('canvas');
+          const maxDim = 800;
+          let w = img.width;
+          let h = img.height;
+          if (w > h && w > maxDim) {
+            h = Math.round((h * maxDim) / w);
+            w = maxDim;
+          } else if (h > maxDim) {
+            w = Math.round((w * maxDim) / h);
+            h = maxDim;
+          }
+          canvas.width = w;
+          canvas.height = h;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, w, h);
+
+          const dataUrl = canvas.toDataURL('image/jpeg', 0.8);
+          currentPhotoBase64 = dataUrl.split(',')[1];
+
+          const preview = document.getElementById('foodPhotoPreview');
+          preview.src = dataUrl;
+          preview.style.display = 'inline-block';
+          document.getElementById('photoUploadPrompt').innerText = '✅ 已載入餐點照片（點擊可重拍/重選）';
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function saveApiKey() {
+      state.apiKey = document.getElementById('apiKeyInput').value.trim();
+      saveState();
+      closeModal('apiModal');
+      if (state.apiKey.length > 10) {
+        alert('✅ Gemini API Key 已安全儲存在妳的手機本機中！現在可以直接拍照算卡路里了！');
+      }
+    }
+
+    // 支援「照片視覺辨識 (Gemini Vision)」與「文字補充說明」雙重分析
+    async function runAiFoodAnalysis() {
+      const text = document.getElementById('aiInputText').value.trim();
+      if (!currentPhotoBase64 && !text) {
+        alert('請先「📷 拍一張餐點照片 / 從相簿選圖」，或是輸入文字說明喔！');
+        return;
+      }
+
+      if (!state.apiKey || state.apiKey.length < 10) {
+        alert('⚠️ 請先點選右上角「🔑 設定 API」貼上妳的 Gemini API Key，才能啟動照片視覺辨識功能喔！');
+        return;
+      }
+
+      document.getElementById('aiLoading').classList.remove('hidden');
+
+      try {
+        const userNote = text ? `使用者補充食用份量與說明：「${text}」。` : '請根據照片中的食物份量直接估算。';
+        const prompt = `妳是珊綺的專屬女明星營養師。她目前基礎代謝1096、容易嚴重脹氣與便秘、有髖部夾擠。請仔細觀察這張餐點照片（若無照片則依文字），並結合${userNote}
+請辨識照片裡有哪些食物，精確估算她實際吃下肚的熱量與蛋白質。
+請務必只回傳純 JSON 格式（不要加 markdown 語法），欄位如下：
+{"foodName": "辨識出的餐點名稱(15字內)", "cal": 整數大卡, "protein": 整數蛋白質克數, "advice": "45字以內的防脹氣/消水腫/護代謝具體建議"}`;
+
+        const parts = [{ text: prompt }];
+        if (currentPhotoBase64) {
+          parts.push({
+            inline_data: {
+              mime_type: 'image/jpeg',
+              data: currentPhotoBase64
+            }
+          });
+        }
+
+        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${state.apiKey}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ contents: [{ parts: parts }] })
+        });
+
+        const data = await res.json();
+        if (data.error) {
+          throw new Error(data.error.message || 'API 呼叫失敗');
+        }
+
+        const raw = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+        const match = raw.match(/\{[\s\S]*\}/);
+        if (match) {
+          const parsed = JSON.parse(match[0]);
+          const foodTitle = parsed.foodName || text || 'AI 拍照辨識餐點';
+          const cal = parseInt(parsed.cal, 10) || 320;
+          const pro = parseInt(parsed.protein, 10) || 18;
+          const prefix = currentPhotoBase64 ? '📸 ' : '🤖 ';
+
+          state.foodLogs.push({ id: Date.now().toString(), name: prefix + foodTitle, cal, protein: pro });
+          saveState();
+          closeAiModal();
+          alert(`✨ Gemini 視覺辨識完成！\n🍽️ 餐點：${foodTitle}\n🔥 熱量：${cal} kcal｜💪 蛋白質：${pro}g\n\n💡 教練叮嚀：${parsed.advice || '記得細嚼慢嚥每口咬20下！'}`);
+          return;
+        } else {
+          throw new Error('無法解析 AI 回傳格式');
+        }
+      } catch (e) {
+        document.getElementById('aiLoading').classList.add('hidden');
+        alert('⚠️ AI 照片分析連線異常：' + e.message + '\n請確認 API Key 是否正確，或網路連線是否順暢。');
+      }
+    }
+
+    function setPoop(val) {
+      poopStatus = val;
+      const btns = document.getElementById('poopRow').children;
+      ['smooth', 'hard', 'none'].forEach((k, i) => btns[i].classList.toggle('active', k === val));
+    }
+
+    function setBloat(val) {
+      bloatStatus = val;
+      const btns = document.getElementById('bloatRow').children;
+      ['flat', 'mild', 'balloon'].forEach((k, i) => btns[i].classList.toggle('active', k === val));
+    }
+
+    function saveBodyRecord() {
+      const wVal = document.getElementById('weightInput').value;
+      if (!wVal) {
+        alert('請先輸入今日體重喔！');
+        return;
+      }
+      const w = parseFloat(wVal) || state.userWeight;
+      const bmr = parseInt(document.getElementById('bmrInput').value, 10) || 1096;
+      const fat = parseFloat(document.getElementById('fatInput').value) || 0;
+      state.userWeight = w;
+
+      let note = '體態穩定推進中';
+      if (poopStatus === 'none' || bloatStatus === 'balloon') {
+        note = '⚠️ 脹氣/宿便滯留（非真胖，勿節食！）';
+      } else if (poopStatus === 'smooth' && bloatStatus === 'flat') {
+        note = '✨ 腸道排空順暢・真實淨體重！(+20購物金)';
+        state.points += 20;
+      }
+
+      const d = new Date();
+      const weekNames = ['日', '一', '二', '三', '四', '五', '六'];
+      const dateStr = `${d.getFullYear()}/${d.getMonth() + 1}/${d.getDate()}(${weekNames[d.getDay()]})`;
+      state.bodyHistory.unshift({ id: Date.now().toString(), date: dateStr, weight: w, bmr, fat, poop: poopStatus, bloat: bloatStatus, note });
+      saveState();
+      alert(`📊 已自動抓取今日日期【${dateStr}】並儲存紀錄：\n${note}`);
+    }
+
+    function removeBodyRecord(idx) {
+      state.bodyHistory.splice(idx, 1);
+      saveState();
+    }
+
+    function clearBodyHistory() {
+      if (confirm('確定要清空所有體重與腸道歷史紀錄嗎？')) {
+        state.bodyHistory = [];
+        saveState();
+      }
+    }
+
+    function addReward() {
+      const title = document.getElementById('newRewardTitle').value.trim();
+      const target = parseInt(document.getElementById('newRewardTarget').value, 10) || 200;
+      if (!title) {
+        alert('請輸入妳想買的禮物名稱！');
+        return;
+      }
+      state.rewards.push({ id: Date.now().toString(), title, target });
+      document.getElementById('newRewardTitle').value = '';
+      document.getElementById('newRewardTarget').value = '';
+      saveState();
+    }
+
+    function removeReward(id) {
+      state.rewards = state.rewards.filter(r => r.id !== id);
+      saveState();
+    }
+
+    function resetPointsZero() {
+      if (confirm('確定要把目前累積的購物金積分歸零，重新開始累積嗎？')) {
+        state.points = 0;
+        saveState();
+      }
+    }
+
+    function resetAllClean() {
+      if (confirm('確定要將所有目標、餐點、體重歷史與積分全部清空歸零嗎？（妳設定的 Gemini API Key 會安全保留）')) {
+        const currentKey = state.apiKey || '';
+        state = getCleanDefaultState(currentKey);
+        saveState();
+        alert('✨ 已全部清空歸零！');
+      }
+    }
+
+    function renderAll() {
+      document.getElementById('todayDateBadge').innerText = getFormattedBannerDate();
+      document.getElementById('topPointsBadge').innerText = `💎 ${state.points} 分`;
+      document.getElementById('rewardPointsValue').innerText = `💎 ${state.points} 分`;
+
+      // 飲水
+      const baseWater = Math.round(state.userWeight * 40);
+      const totalWater = baseWater + WORKOUT_PLANS[selectedDay].extraWater;
+      document.getElementById('waterHeader').innerText = `${state.waterMl} / ${totalWater} ml`;
+      document.getElementById('waterHelper').innerText = `基礎需求 (${state.userWeight}kg × 40 = ${baseWater}ml) ＋ 今日運動流汗補正 (${WORKOUT_PLANS[selectedDay].extraWater}ml)`;
+      document.getElementById('waterBar').style.width = Math.min(100, Math.round((state.waterMl / totalWater) * 100)) + '%';
+
+      const waterCheck = state.checklist.find(c => c.id === 'c_water');
+      const bonusHint = document.getElementById('waterBonusHint');
+      if (waterCheck && waterCheck.done) {
+        bonusHint.innerText = '✅ 今日飲水已達標！已獲得 +15 購物金！';
+      } else {
+        bonusHint.innerText = `🎁 再喝 ${Math.max(0, totalWater - state.waterMl)} ml 即可達標並自動賺取 +15 購物金！`;
+      }
+
+      // 星期與運動
+      const dayContainer = document.getElementById('daySelector');
+      dayContainer.innerHTML = [0,1,2,3,4,5,6].map(d =>
+        `<button class="day-chip ${selectedDay === d ? 'active' : ''}" onclick="selectDay(${d})">${WORKOUT_PLANS[d].day}${d === new Date().getDay() ? '(今日)' : ''}</button>`
+      ).join('');
+      document.getElementById('workoutTitle').innerText = WORKOUT_PLANS[selectedDay].title;
+      document.getElementById('workoutDetail').innerText = WORKOUT_PLANS[selectedDay].detail;
+
+      // 檢核表
+      document.getElementById('checklistContainer').innerHTML = state.checklist.map(item => `
+        <div class="check-row ${item.done ? 'done' : ''}" onclick="toggleCheck('${item.id}')">
+          <div class="checkbox">${item.done ? '✓' : ''}</div>
+          <div class="check-text">${item.text}</div>
+          <div class="check-pts">+${item.pts}分</div>
+        </div>
+      `).join('');
+
+      // 飲食
+      const totalCal = state.foodLogs.reduce((s, i) => s + i.cal, 0);
+      const totalPro = state.foodLogs.reduce((s, i) => s + i.protein, 0);
+      document.getElementById('calHeader').innerText = `${totalCal} / 1200 kcal`;
+      const calBar = document.getElementById('calBar');
+      calBar.style.width = Math.min(100, Math.round((totalCal / 1200) * 100)) + '%';
+      calBar.style.background = totalCal > 1250 ? 'var(--red)' : 'var(--green)';
+      document.getElementById('proHeader').innerText = `💪 蛋白質累計：${totalPro}g / 目標 80g`;
+      document.getElementById('apiStatusLabel').innerText = (state.apiKey && state.apiKey.length > 10) ? '🟢 已綁定 Gemini Vision 拍照分析' : '⚪ 離線估算模式';
+
+      document.getElementById('presetFoodsContainer').innerHTML = PRESET_FOODS.map((f, idx) => `
+        <div class="preset-item" onclick="addPresetFood(${idx})">
+          <div>
+            <div class="preset-name">${f.name}</div>
+            <div class="preset-tag">${f.tag}｜蛋白質 ${f.protein}g</div>
+          </div>
+          <span class="add-cal-badge">+${f.cal} 卡</span>
+        </div>
+      `).join('');
+
+      document.getElementById('foodLogsContainer').innerHTML = state.foodLogs.length === 0
+        ? '<div style="font-size:12px;color:#94A3B8;padding:8px 0;">今日尚未記錄餐點，請從上方拍照分析或點選新增！</div>'
+        : state.foodLogs.map(log => `
+          <div class="log-row">
+            <span style="flex:1;color:#334155;">${log.name}</span>
+            <span style="font-weight:700;color:var(--teal);margin-right:8px;">${log.cal} kcal (${log.protein}g)</span>
+            <button class="del-btn" onclick="removeFood('${log.id}')">✕</button>
+          </div>
+        `).join('');
+
+      // 體重歷史
+      document.getElementById('bodyHistoryContainer').innerHTML = state.bodyHistory.length === 0
+        ? '<div style="font-size:12px;color:#94A3B8;padding:8px 0;">目前尚無紀錄，輸入上方體重後點擊儲存就會自動抓今天日期入帳！</div>'
+        : state.bodyHistory.map((rec, idx) => `
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #F1F5F9;">
+            <div style="flex:1;">
+              <div style="font-size:13px;font-weight:800;color:var(--dark);">${rec.date}｜${rec.weight} kg（BMR: ${rec.bmr}${rec.fat ? ` / 體脂: ${rec.fat}%` : ''}）</div>
+              <div style="font-size:12px;color:var(--teal);margin-top:2px;">${rec.note}</div>
+            </div>
+            <span style="background:#F1F5F9;padding:4px 8px;border-radius:8px;font-size:11px;font-weight:700;color:#334155;margin-right:6px;">
+              ${rec.bloat === 'balloon' ? '🎈氣球肚' : rec.bloat === 'mild' ? '💨微脹' : '🌿平坦'}
+            </span>
+            <button class="del-btn" onclick="removeBodyRecord(${idx})">✕</button>
+          </div>
+        `).join('');
+
+      // 獎勵庫
+      document.getElementById('rewardsContainer').innerHTML = state.rewards.length === 0
+        ? '<div style="font-size:12px;color:#94A3B8;padding:12px 0;text-align:center;">清單已清空！請在下方輸入妳自己想買的達標禮物吧 ✨</div>'
+        : state.rewards.map(r => {
+          const prog = Math.min(100, Math.round((state.points / r.target) * 100));
+          const unlocked = state.points >= r.target;
+          return `
+            <div style="padding:10px 0;border-bottom:1px solid #F1F5F9;">
+              <div class="card-header">
+                <span style="font-size:14px;font-weight:800;color:var(--dark);flex:1;">${r.title}</span>
+                <span style="font-size:12px;font-weight:800;color:${unlocked ? '#059669' : '#D97706'};margin-right:6px;">
+                  ${unlocked ? '🎉 已解鎖可購買！' : `${state.points} / ${r.target} 分 (${prog}%)`}
+                </span>
+                <button class="del-btn" onclick="removeReward('${r.id}')">✕</button>
+              </div>
+              <div class="progress-bg">
+                <div class="progress-fill" style="width:${prog}%;background:${unlocked ? 'var(--green)' : 'var(--amber)'};"></div>
+              </div>
+            </div>
+          `;
+        }).join('');
+    }
+
+    // 初始化
+    document.getElementById('quoteText').innerText = COACH_QUOTES[0];
+    renderAll();
+  </script>
+</body>
+</html>
